@@ -1,8 +1,10 @@
 import numpy as np
 import pylab as pl
 from skimage import transform as tf
+from skimage import io, filter, data
 from skimage.util.dtype import convert
 from image.feature_extraction import process_image
+from scipy import ndimage
 
 
 def transform_from_corners(im):
@@ -25,8 +27,8 @@ def transform_from_corners(im):
     tform = tf.ProjectiveTransform()
     tform.estimate(tp, fp)
     output_shape = (dim, dim)
-    # TODO: use scikit-image warp function to apply the transformation
-    warped = None
+
+    warped = tf.warp(im, tform,output_shape = (dim, dim))
 
     # Convert result in the right format [0, 255]
     im = convert(warped, np.uint8)
@@ -77,7 +79,9 @@ def extract_cells(im):
         for col in range(9):
             crop = im[row*div_x:(row+1)*div_x, col*div_y:(col+1)*div_y]
             # TODO: process the image to remove borders and resize
-            cells.append(crop)
+            sx, sy = crop.shape;
+            crop_border = crop[ sx/8: -sx/8, sy/8: -sy/8 ]
+            cells.append(crop_border)
 
     # Plot the extracted cells
     plot_extracted_cells(cells)
