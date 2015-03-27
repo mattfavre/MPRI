@@ -29,9 +29,9 @@ def load_data(path):
     # Create labels
     labels = [int(im_name.split('/')[-1][0]) for im_name in im_list]
     
-#    for x in range(0,200):
-#        print(im_list[x])
-#        print(labels[x])
+    # for x in range(0,200):
+    #     print(im_list[x])
+    #     print(labels[x])
     # Create feature list
     feature_list = list() 
 

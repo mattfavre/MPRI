@@ -19,6 +19,7 @@ from skimage import transform as tf
 import image.feature_extraction
 import matplotlib.pyplot as plt
 
+
 # Choose a sudoku grid number, and prepare paths (image and verification grid)
 sudoku_nb = 18
 im_path = './data/ocr_data/{}.JPG'.format(sudoku_nb)
@@ -55,6 +56,8 @@ pl.xlabel('Predicted label')
 pl.show()
 
 # Load sudoku image
+im_path = './data/sudokus/sudoku{}.JPG'.format(sudoku_nb)
+ver_path = './data/sudokus/sudoku{}.sud'.format(sudoku_nb)
 sudoku_img = np.array(Image.open(im_path).convert('L'))
 
 # Extract cells
@@ -62,12 +65,26 @@ cells = extract_cells(sudoku_img)
 
 # Add data for each cell
 # TODO: iterate over cells and append features to a list
+feature_list = list()
+for cell_i in cells:
+        cell_feature = extract_features(cell_i);
+        feature_list.append(cell_feature)
+
 
 # Classification
 # TODO: use the classifier to predict on the list of features
+y_result = 0  # Cette variable possede le resutat de la classification
+
 
 # Load solution to compare with, print metrics, and print confusion matrix
 y_sudoku = np.loadtxt(ver_path).reshape(81)
+
+matched_cell = 0
+
+for i in range(0,y_sudoku.size):
+    if y_sudoku[i] == y_result : #[i]
+        matched_cell += 1
+
 # TODO: print classification report
 # TODO: show confusion matrix
 
