@@ -9,18 +9,23 @@ from skimage import exposure
 from skimage.filters import rank
 from skimage.morphology import erosion, dilation, opening, closing, white_tophat, skeletonize
 import matplotlib.pyplot as plt
-
+from skimage import data, img_as_float
+from skimage import exposure
 
 
 def extract_features(im):
     """ Returns a feature vector for an image patch. """
 
     # TODO: find other features to use
-    return im.flatten()
+    img = img_as_float(im)
+    hist  = img.ravel();
+    return hist.flatten()
 
 
-def process_image(im, border_size=5, im_size=50):
+def process_image(im, border_size=8, im_size=50):
     """ Remove borders and resize """
+
+    sx, sy = im.shape;
 
     # noise removal
     im = median(im, disk(2))
@@ -32,7 +37,15 @@ def process_image(im, border_size=5, im_size=50):
     # erosion
     im = erosion(im, disk(1))
 
+    im = im[ sx/8:-sx/8, sy/8:-sy/8]
+
     im = resize(im , (im_size, im_size))
+
+    # Si la case est presque blanche
+    if (np.mean(im) >= 0.95) :
+	im[:,:] = 1.0
+    elif (np.mean(im) <= 0.1) :
+	im[:,:] = 1.0
     return im
 
 

@@ -78,10 +78,7 @@ def extract_cells(im):
     for row in range(9):
         for col in range(9):
             crop = im[row*div_x:(row+1)*div_x, col*div_y:(col+1)*div_y]
-            # TODO: process the image to remove borders and resize
             crop_border = process_image(crop);
-            #sx, sy = crop.shape;
-            #crop_border = crop[ sx/8: -sx/8, sy/8: -sy/8 ]
             cells.append(crop_border)
 
     # Plot the extracted cells

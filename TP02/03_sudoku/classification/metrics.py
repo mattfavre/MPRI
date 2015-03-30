@@ -15,4 +15,5 @@ def print_classification_report(y_true, y_pred, title=''):
     Print a classification report
     """
 
-    # TODO: print classification report
+    report = classification_report(y_true, y_pred)
+    print(report)
