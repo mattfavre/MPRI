@@ -19,10 +19,10 @@ from skimage import transform as tf
 import matplotlib.pyplot as plt
 
 
-clf = load_or_train(True)
+clf = load_or_train(False)
 
 # Load sudoku image
-sudoku_nb = 2
+sudoku_nb = 18
 im_path = './data/sudokus/sudoku{}.JPG'.format(sudoku_nb)
 ver_path = './data/sudokus/sudoku{}.sud'.format(sudoku_nb)
 sudoku_img = np.array(Image.open(im_path).convert('L'))
@@ -45,6 +45,14 @@ result_correct = np.loadtxt(ver_path, dtype='int')
 
 # TODO: print classification report
 # TODO: show confusion matrix
+cm = confusion_matrix(result_correct, result)
+pl.matshow(cm)
+pl.title('Confusion matrix on sudoku grid results')
+pl.colorbar()
+pl.ylabel('True label')
+pl.xlabel('Predicted label')
+pl.colors()
+pl.show()
 
 print_classification_report(result_correct ,result,'Rapport')
 
