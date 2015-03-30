@@ -2,6 +2,14 @@ from tools import list_images
 import numpy as np
 from PIL import Image
 from skimage.transform import resize
+from skimage.filters import threshold_otsu
+from skimage.filters.rank import median
+from skimage.morphology import disk
+from skimage import exposure
+from skimage.filters import rank
+from skimage.morphology import erosion, dilation, opening, closing, white_tophat, skeletonize
+import matplotlib.pyplot as plt
+
 
 
 def extract_features(im):
@@ -14,9 +22,17 @@ def extract_features(im):
 def process_image(im, border_size=5, im_size=50):
     """ Remove borders and resize """
 
-    im = im[border_size:-border_size, border_size:-border_size]
-    im = resize(im, (im_size, im_size))
+    # noise removal
+    im = median(im, disk(2))
 
+    # binarization
+    thresh = threshold_otsu(im)
+    im = im > thresh
+	  
+    # erosion
+    im = erosion(im, disk(1))
+
+    im = resize(im , (im_size, im_size))
     return im
 
 
