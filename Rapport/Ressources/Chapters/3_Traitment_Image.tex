@@ -9,56 +9,58 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-Le but de cet exercice est de démontrer que l'on peut apprendre "n'importe quoi" à un réseau de neurone. Pour notre essai, nous allons apprendre à notre réseau de neurones la fonction : 
+Le but de ce chapitre est de vous parler un peu de l'amélioration du traitement d'image pour obtenir de meilleurs résultats.
+
+\section{Process image code}
 
 
-\section{Training data}
+\begin{lstlisting}[frame=single,style=Python]  % Start your code-block
 
+def process_image(im, border_size=8, im_size=50):
+    """ Remove borders and resize """
 
-\begin{lstlisting}[frame=single,style=python]  % Start your code-block
+    sx, sy = im.shape;
 
-x_train = [0:0.1:2*pi] ;
-y_target = cos(x_train);
+    # noise removal
+    im = median(im, disk(2))
+
+    # binarization
+    thresh = threshold_otsu(im)
+    im = im > thresh
+	  
+    # erosion
+    im = erosion(im, disk(1))
+
+    im = im[ sx/8:-sx/8, sy/8:-sy/8]
+
+    im = resize(im , (im_size, im_size))
+
+    # Si la case est presque blanche
+    if (np.mean(im) >= 0.9) :
+	im[:,:] = 1.0
+    elif (np.mean(im) <= 0.2) :
+	im[:,:] = 1.0
+    return im
 \end{lstlisting}
 
 
+\pagebreak
+Ce qui nous donne les résultats suivant : \\
+
+
+\textbf{Sans traitement d'image :}
 \begin{center} 
 \hspace{15cm}
-\includegraphics[width=15cm]{netview.png}
+\includegraphics[width=12cm]{Avant_Processing.png}
 \end{center}
 \vspace{0.5cm} 
 
-On voit que l'on à qu'une entrée et une sortie, ce qui est logique, car on veut entrer une valeur de "x" et obtenir le cosinus de "x". Le type d'entrainement utilisé est "Levenberg-Marquardt".\\
-
-Voici le diagramme MSE généré par notre outils : 
-
+\textbf{Avec traitement d'image :}
 \begin{center} 
 \hspace{15cm}
-\includegraphics[width=10cm]{mse_cos.png}
+\includegraphics[width=12cm]{Apres_Processing.png}
 \end{center}
-\vspace{1cm}
-On peut bien voir le travail d'entrainement et le calcul des poids pour minimiser l'erreur. Vérifions maintenant notre système.
-\pagebreak
+\vspace{0.5cm} 
 
+Ce qui rend nos cases considérablement plus lisible. Par contre, les cases noires devraient être blanches. Nous n'avons pas compris (même en forcant un valeur soit 0 où 1).
 
-\section{Vérification}
-
-Afin de vérifier si notre système fonctionne, on génère maintenant une nouvelle série des valeur de "x" qui n'appartiennent pas à l'ensemble d'entrainement. Voilà le code :
-
-\begin{lstlisting}[frame=single,style=C]  % Start your code-block
-
-x_validation = [0:0.03:2*pi];
-
-y = net(x_validation);
-y10 = net10(x_validation);
-\end{lstlisting}
-
-Voilà le résultat (en haut la sortie y, et en bas l'erreur par rapport au vrai cos(x)) : 
-\begin{center} 
-\hspace{15cm}
-\includegraphics[width=15cm]{cos_res.png}
-\end{center}
-\vspace{1cm}
-
-
-On voit que l'on à bien pu entrainer notre système avec $x \in [0;2\pi]$ (au-delà le système est faux, l'erreur grandit). On voit que le système à 10 layers est nettement plus performant que le système à 3 layers. Toutefois, le système devient instable pour des valeurs de $x$ approchant $2\pi$.   
