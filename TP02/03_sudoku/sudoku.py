@@ -52,6 +52,7 @@ pl.title('Confusion matrix')
 pl.colorbar()
 pl.ylabel('True label')
 pl.xlabel('Predicted label')
+pl.colors()
 pl.show()
 
 # Load sudoku image
@@ -66,19 +67,24 @@ cells = extract_cells(sudoku_img)
 # TODO: iterate over cells and append features to a list
 feature_list = list()
 for cell_i in cells:
-        cell_feature = extract_features(cell_i);
+        cell_feature = extract_features(cell_i)
         feature_list.append(cell_feature)
 
 
 # Classification
 # TODO: use the classifier to predict on the list of features
-y_result = 0  # Cette variable possede le resutat de la classification
-
+y_result = list()  # Cette variable possede le resutat de la classification
+Npfeature_list = np.array(feature_list)
+for feature in Npfeature_list:
+    result = clf.predict(feature)
+    y_result.append(result)
+    
+print(y_result)
 
 # Load solution to compare with, print metrics, and print confusion matrix
 y_sudoku = np.loadtxt(ver_path).reshape(81)
 
-#matched_cell = 0
+matched_cell = 0
 
 for i in range(0,y_sudoku.size):
     if y_sudoku[i] == y_result : #[i]
