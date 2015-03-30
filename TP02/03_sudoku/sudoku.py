@@ -5,7 +5,7 @@ from image.cell_extraction import extract_cells, plot_extracted_cells
 from PIL import Image
 import numpy as np
 from image.cell_extraction import *
-from image.feature_extraction import extract_features, load_data
+from image.feature_extraction import *
 from sklearn import cross_validation, datasets, svm
 from sklearn.metrics import confusion_matrix
 import pylab as pl
@@ -16,7 +16,6 @@ import pylab as pl
 import skimage
 from skimage import data, filter, io
 from skimage import transform as tf
-import image.feature_extraction
 import matplotlib.pyplot as plt
 
 
@@ -79,7 +78,7 @@ y_result = 0  # Cette variable possede le resutat de la classification
 # Load solution to compare with, print metrics, and print confusion matrix
 y_sudoku = np.loadtxt(ver_path).reshape(81)
 
-matched_cell = 0
+#matched_cell = 0
 
 for i in range(0,y_sudoku.size):
     if y_sudoku[i] == y_result : #[i]
