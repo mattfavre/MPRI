@@ -10,16 +10,13 @@ from skimage.filters import rank
 from skimage.morphology import erosion, dilation, opening, closing, white_tophat, skeletonize
 import matplotlib.pyplot as plt
 from skimage import data, img_as_float
-from skimage import exposure
+from skimage import exposure, feature
 
 
 def extract_features(im):
     """ Returns a feature vector for an image patch. """
-
-    # TODO: find other features to use
-    img = img_as_float(im)
-    hist  = img.ravel();
-    return hist.flatten()
+    hog = feature.hog(im)
+    return hog
 
 
 def process_image(im, border_size=8, im_size=50):
@@ -42,9 +39,9 @@ def process_image(im, border_size=8, im_size=50):
     im = resize(im , (im_size, im_size))
 
     # Si la case est presque blanche
-    if (np.mean(im) >= 0.95) :
+    if (np.mean(im) >= 0.9) :
 	im[:,:] = 1.0
-    elif (np.mean(im) <= 0.1) :
+    elif (np.mean(im) <= 0.2) :
 	im[:,:] = 1.0
     return im
 
