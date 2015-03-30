@@ -19,7 +19,7 @@ from skimage import transform as tf
 import matplotlib.pyplot as plt
 
 
-clf = load_or_train(False)
+clf = load_or_train(True)
 
 # Load sudoku image
 sudoku_nb = 2
