@@ -3,6 +3,8 @@ import pickle
 from sklearn import svm, cross_validation
 from classification.metrics import show_confusion_matrix, print_classification_report
 from image.feature_extraction import load_data
+from sklearn.metrics import confusion_matrix
+import pylab as pl
 
 
 def train(clf, X_train, y_train):
@@ -30,12 +32,25 @@ def load_or_train(force_train=False):
     else:
         # Loading all data
         X, y = load_data(data_path)
+        X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.4, random_state=0)
+
 
         # Instantiate a classifier
         # TODO: instantiate a new classifier (choose an adapted kernel!)
+        clf = svm.SVC(kernel='linear', C=5)
+        y_pred = clf.fit(X_train, y_train).predict(X_test)
 
         # Cross validation
         # TODO: do cross-validation and print cross-validation result (mean accuracy +/- standard deviation)
+        cm = confusion_matrix(y_test, y_pred)
+        
+        pl.matshow(cm)
+        pl.title('Confusion matrix')
+        pl.colorbar()
+        pl.ylabel('True label')
+        pl.xlabel('Predicted label')
+        pl.colors()
+        pl.show()
 
         # Train the classifier on the whole dataset, and save it
         # TODO: train the classifier on the whole dataset
@@ -45,4 +60,4 @@ def load_or_train(force_train=False):
         # trained classifier. But keep in mind that you will do it on the training set itself!
 
     # TODO: return the classifier
-    return None
+    return clf
