@@ -25,7 +25,7 @@ def process_image(im, border_size=8, im_size=50):
     sx, sy = im.shape;
 
     # noise removal
-    im = median(im, disk(2))
+    im = median(im, disk(5))
 
     # binarization
     thresh = threshold_otsu(im)
@@ -35,14 +35,8 @@ def process_image(im, border_size=8, im_size=50):
     im = erosion(im, disk(1))
 
     im = im[ sx/8:-sx/8, sy/8:-sy/8]
-
     im = resize(im , (im_size, im_size))
 
-    # Si la case est presque blanche
-    if (np.mean(im) >= 0.9) :
-	im[:,:] = 1.0
-    elif (np.mean(im) <= 0.2) :
-	im[:,:] = 1.0
     return im
 
 
