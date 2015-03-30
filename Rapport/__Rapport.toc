@@ -1,0 +1,4 @@
+\select@language {francais}
+\select@language {french}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Conclusion}{2}{chapter.2}
