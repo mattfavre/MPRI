@@ -13,34 +13,11 @@ from classification.svm import*
 
 #from sklearn import datasets
 
-
 import skimage
 from skimage import data, filter, io
 from skimage import transform as tf
 import matplotlib.pyplot as plt
 
-#im_npArray, label_npArray = load_data('./data/ocr_data/')
-
-# Split the data into a training set and a test set
-#X_train, X_test, y_train, y_test = cross_validation.train_test_split(im_npArray, label_npArray, test_size=0.4, random_state=0)
-
-
-# Get trained classifier
-#clf = svm.SVC(kernel='linear', C=5)
-
-#y_pred = clf.fit(X_train, y_train).predict(X_test)
-
-# Compute confusion matrix
-#cm = confusion_matrix(y_test, y_pred)
-
-# Show confusion matrix in a separate window
-#pl.matshow(cm)
-#pl.title('Confusion matrix')
-#pl.colorbar()
-#pl.ylabel('True label')
-#pl.xlabel('Predicted label')
-#pl.colors()
-#pl.show()
 
 clf = load_or_train(True)
 
