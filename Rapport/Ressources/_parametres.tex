@@ -45,12 +45,18 @@
 
 % listings
 \usepackage{verbatim}
-\usepackage{listings}
+%\usepackage{listings}
+\usepackage[procnames]{listings}
 %\usepackage{xcolor}
 \definecolor{grey}{rgb}{0.96,0.96,0.96}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 \definecolor{red}{rgb}{1,0,0}
+
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
 
 \lstset{
 backgroundcolor=\color{grey}, 
@@ -83,6 +89,15 @@ identifierstyle=\normalfont,
 	{ù}{{\`u}}1
 	{ô}{{\^o}}1
 }
+
+\lstset{language=Python, 
+        basicstyle=\ttfamily\small, 
+        keywordstyle=\color{keywords},
+        commentstyle=\color{comments},
+        stringstyle=\color{red},
+        showstringspaces=false,
+        identifierstyle=\color{green},
+        procnamekeys={def,class}}
 
 \lstdefinestyle{Console}{
 	language=c,

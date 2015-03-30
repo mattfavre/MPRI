@@ -42,7 +42,7 @@ import matplotlib.pyplot as plt
 #pl.colors()
 #pl.show()
 
-clf = load_or_train(False)
+clf = load_or_train(True)
 
 # Load sudoku image
 sudoku_nb = 2

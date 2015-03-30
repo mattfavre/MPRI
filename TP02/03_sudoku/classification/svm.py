@@ -10,7 +10,6 @@ import pylab as pl
 def train(clf, X_train, y_train):
     """ Train and return an SVM classifier """
 
-    # TODO: train the classifier
 
     # TODO: return the classifier
     return None
