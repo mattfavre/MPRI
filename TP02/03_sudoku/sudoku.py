@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 clf = load_or_train(False)
 
 # Load sudoku image
-sudoku_nb = 20
+sudoku_nb = 2
 im_path = './data/sudokus/sudoku{}.JPG'.format(sudoku_nb)
 ver_path = './data/sudokus/sudoku{}.sud'.format(sudoku_nb)
 sudoku_img = np.array(Image.open(im_path).convert('L'))
